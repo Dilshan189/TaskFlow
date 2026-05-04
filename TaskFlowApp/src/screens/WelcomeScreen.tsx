@@ -1,4 +1,3 @@
-import React from 'react';
 import { 
   View, 
   Text, 
@@ -7,6 +6,8 @@ import {
   TouchableOpacity, 
   SafeAreaView 
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { COLORS, SPACING } from '../utils/theme';
 
 
@@ -24,22 +25,29 @@ const WelcomeScreen = ({ navigation }: any) => {
         </View>
 
         <View style={styles.textContainer}>
-          <Text style={styles.brand}>TaskFlow</Text>
-          <Text style={styles.title}>Organize your life,{'\n'}achieve your goals.</Text>
-          <Text style={styles.subtitle}>
+          <Animated.Text entering={FadeInDown.delay(200).duration(1000)} style={styles.brand}>TaskFlow</Animated.Text>
+          <Animated.Text entering={FadeInDown.delay(400).duration(1000)} style={styles.title}>Organize your life,{'\n'}achieve your goals.</Animated.Text>
+          <Animated.Text entering={FadeInDown.delay(600).duration(1000)} style={styles.subtitle}>
             The smartest way to manage your daily tasks with AI-driven priority scoring.
-          </Text>
+          </Animated.Text>
         </View>
 
-        <View style={styles.footer}>
+        <Animated.View entering={FadeInUp.delay(800).duration(1000)} style={styles.footer}>
           <TouchableOpacity 
-            style={styles.button}
             onPress={() => navigation.replace('Main')}
+            activeOpacity={0.8}
           >
-            <Text style={styles.buttonText}>Get Started</Text>
+            <LinearGradient
+              colors={[COLORS.primary, '#4F46E5']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Get Started</Text>
+            </LinearGradient>
           </TouchableOpacity>
           <Text style={styles.footerText}>By continuing, you agree to our Terms & Privacy Policy</Text>
-        </View>
+        </Animated.View>
       </View>
     </SafeAreaView>
   );

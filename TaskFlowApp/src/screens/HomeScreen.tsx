@@ -10,6 +10,7 @@ import {
   TextInput,
   Dimensions,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { COLORS, SPACING, SIZES } from '../utils/theme';
 import { useTaskStore } from '../store/useTaskStore';
 
@@ -18,6 +19,13 @@ Dimensions.get('window');
 const HomeScreen = ({ navigation }: any) => {
   const { tasks, initDB } = useTaskStore();
   const categories = ['All Tasks', 'Urgent', 'Personal', 'Work', 'Ideas'];
+
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Good Morning';
+    if (hour < 18) return 'Good Afternoon';
+    return 'Good Evening';
+  };
 
   React.useEffect(() => {
     initDB();
@@ -28,7 +36,7 @@ const HomeScreen = ({ navigation }: any) => {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Hello, Vanessa</Text>
+          <Text style={styles.greeting}>{getGreeting()}, Vanessa</Text>
           <Text style={styles.subGreeting}>Welcome back to TaskFlow</Text>
         </View>
         <Image 
@@ -72,7 +80,10 @@ const HomeScreen = ({ navigation }: any) => {
             source={{ uri: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80' }} 
             style={styles.featuredImage} 
           />
-          <View style={styles.cardOverlay}>
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.8)']}
+            style={styles.cardOverlay}
+          >
             <TouchableOpacity style={styles.heartIcon}>
               <Text style={{ fontSize: 18 }}>🤍</Text>
             </TouchableOpacity>
@@ -93,7 +104,7 @@ const HomeScreen = ({ navigation }: any) => {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
+          </LinearGradient>
         </View>
 
         {/* Regular Tasks List */}

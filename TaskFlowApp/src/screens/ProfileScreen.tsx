@@ -1,8 +1,28 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { COLORS, SPACING, SIZES } from '../utils/theme';
+import { useTaskStore } from '../store/useTaskStore';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }: any) => {
+  const { tasks } = useTaskStore();
+  
+  const completed = tasks.filter(t => t.status === 'Completed').length;
+  const pending = tasks.filter(t => t.status === 'Pending').length;
+
+  const handleItemPress = (label: string) => {
+    if (label === 'Logout') {
+      Alert.alert(
+        "Logout",
+        "Are you sure you want to logout?",
+        [
+          { text: "Cancel", style: "cancel" },
+          { text: "Logout", style: "destructive", onPress: () => navigation.replace('Welcome') }
+        ]
+      );
+    } else {
+      Alert.alert(label, `${label} settings will be available soon!`);
+    }
+  };
+
   const menuItems = [
     { icon: '👤', label: 'Personal Information' },
     { icon: '🔔', label: 'Notifications' },
@@ -12,7 +32,7 @@ const ProfileScreen = () => {
   ];
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <View style={styles.profileInfo}>
           <Image 
@@ -21,7 +41,26 @@ const ProfileScreen = () => {
           />
           <Text style={styles.name}>Vanessa Carter</Text>
           <Text style={styles.email}>vanessa.c@taskflow.com</Text>
-          <TouchableOpacity style={styles.editButton}>
+          
+          <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+              <Text style={styles.statNum}>{tasks.length}</Text>
+              <Text style={styles.statLabel}>Total</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={styles.statNum}>{completed}</Text>
+              <Text style={styles.statLabel}>Done</Text>
+            </View>
+            <View style={styles.statItem}>
+              <Text style={styles.statNum}>{pending}</Text>
+              <Text style={styles.statLabel}>Pending</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity 
+            style={styles.editButton}
+            onPress={() => Alert.alert("Edit Profile", "Edit profile coming soon!")}
+          >
             <Text style={styles.editButtonText}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
@@ -29,7 +68,11 @@ const ProfileScreen = () => {
 
       <View style={styles.menuContainer}>
         {menuItems.map((item, index) => (
-          <TouchableOpacity key={index} style={styles.menuItem}>
+          <TouchableOpacity 
+            key={index} 
+            style={styles.menuItem}
+            onPress={() => handleItemPress(item.label)}
+          >
             <View style={styles.menuIconContainer}>
               <Text style={styles.menuIcon}>{item.icon}</Text>
             </View>
@@ -81,10 +124,30 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 25,
+    paddingVertical: 12,
     borderRadius: 20,
-    marginTop: 20,
+    marginTop: 25,
+  },
+  statsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 30,
+    paddingHorizontal: 20,
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statNum: {
+    color: COLORS.white,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  statLabel: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 12,
+    marginTop: 4,
   },
   editButtonText: {
     color: COLORS.white,

@@ -1,13 +1,24 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { COLORS, SPACING } from '../utils/theme';
+import { useTaskStore } from '../store/useTaskStore';
 
 const AnalyticsScreen = () => {
+  const { tasks } = useTaskStore();
+  
+  const completedTasks = tasks.filter(t => t.status === 'Completed').length;
+  const pendingTasks = tasks.filter(t => t.status === 'Pending').length;
+  const totalTasks = tasks.length;
+  const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+  // Mocking weekly data based on real count for visual consistency
+  const weeklyData = [totalTasks + 2, totalTasks + 5, totalTasks + 1, totalTasks + 8, totalTasks + 4, totalTasks + 6, totalTasks];
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Text style={styles.title}>Your Progress</Text>
-        <Text style={styles.subtitle}>Last 7 days performance</Text>
+        <Text style={styles.subtitle}>Based on your {totalTasks} tasks</Text>
       </View>
 
       <View style={styles.statsContainer}>
@@ -15,14 +26,14 @@ const AnalyticsScreen = () => {
           <View style={[styles.statIcon, { backgroundColor: '#ECFDF5' }]}>
             <Text>✅</Text>
           </View>
-          <Text style={styles.statValue}>24</Text>
+          <Text style={styles.statValue}>{completedTasks}</Text>
           <Text style={styles.statLabel}>Completed</Text>
         </View>
         <View style={styles.statCard}>
           <View style={[styles.statIcon, { backgroundColor: '#FFF7ED' }]}>
             <Text>⏳</Text>
           </View>
-          <Text style={[styles.statValue, { color: COLORS.warning }]}>08</Text>
+          <Text style={[styles.statValue, { color: COLORS.warning }]}>{pendingTasks}</Text>
           <Text style={styles.statLabel}>In Progress</Text>
         </View>
       </View>
@@ -30,14 +41,16 @@ const AnalyticsScreen = () => {
       <View style={styles.mainChartCard}>
         <Text style={styles.chartTitle}>Productivity Score</Text>
         <View style={styles.scoreContainer}>
-          <Text style={styles.scoreText}>85%</Text>
-          <Text style={styles.scoreSubtext}>+12% from last week</Text>
+          <Text style={styles.scoreText}>{completionRate}%</Text>
+          <Text style={styles.scoreSubtext}>
+            {completionRate > 50 ? '🔥 You are doing great!' : '💪 Keep pushing forward!'}
+          </Text>
         </View>
         
         <View style={styles.barsContainer}>
-          {[30, 45, 35, 60, 40, 55, 45].map((height, i) => (
+          {weeklyData.map((val, i) => (
             <View key={i} style={styles.barWrapper}>
-              <View style={[styles.bar, { height: height * 1.5, backgroundColor: i === 3 ? COLORS.secondary : 'rgba(255,255,255,0.3)' }]} />
+              <View style={[styles.bar, { height: Math.max(val * 5, 20), backgroundColor: i === 6 ? COLORS.secondary : 'rgba(255,255,255,0.3)' }]} />
               <Text style={styles.barLabel}>{['M', 'T', 'W', 'T', 'F', 'S', 'S'][i]}</Text>
             </View>
           ))}
