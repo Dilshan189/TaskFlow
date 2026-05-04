@@ -4,19 +4,28 @@ import { COLORS, SPACING, SIZES } from '../utils/theme';
 import { useTaskStore } from '../store/useTaskStore';
 
 const TasksScreen = () => {
-  const { tasks } = useTaskStore();
+  const { tasks, toggleTask, deleteTask } = useTaskStore();
 
   const renderItem = ({ item }: any) => (
-    <TouchableOpacity style={styles.taskCard}>
+    <View style={styles.taskCard}>
       <View style={[styles.priorityLine, { backgroundColor: item.priority === 'High' ? COLORS.danger : (item.priority === 'Medium' ? COLORS.warning : COLORS.success) }]} />
+      
+      <TouchableOpacity 
+        style={styles.checkbox} 
+        onPress={() => toggleTask(item.id)}
+      >
+        <Text style={styles.checkboxIcon}>{item.status === 'Completed' ? '✅' : '⭕'}</Text>
+      </TouchableOpacity>
+
       <View style={styles.taskInfo}>
-        <Text style={styles.taskTitle}>{item.title}</Text>
+        <Text style={[styles.taskTitle, item.status === 'Completed' && styles.completedText]}>{item.title}</Text>
         <Text style={styles.taskDesc} numberOfLines={1}>{item.description || 'No description'}</Text>
       </View>
-      <View style={styles.statusBadge}>
-        <Text style={styles.statusText}>{item.priority}</Text>
-      </View>
-    </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => deleteTask(item.id)} style={styles.deleteButton}>
+        <Text style={{ fontSize: 18 }}>🗑️</Text>
+      </TouchableOpacity>
+    </View>
   );
 
   return (
@@ -94,22 +103,25 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: COLORS.text,
   },
+  completedText: {
+    textDecorationLine: 'line-through',
+    color: COLORS.textSecondary,
+    opacity: 0.6,
+  },
   taskDesc: {
     fontSize: 13,
     color: COLORS.textSecondary,
     marginTop: 2,
   },
-  statusBadge: {
-    backgroundColor: COLORS.chip,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
+  checkbox: {
+    marginLeft: 10,
+    marginRight: 5,
   },
-  statusText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: COLORS.textSecondary,
-    textTransform: 'uppercase',
+  checkboxIcon: {
+    fontSize: 22,
+  },
+  deleteButton: {
+    padding: 10,
   },
   emptyState: {
     alignItems: 'center',

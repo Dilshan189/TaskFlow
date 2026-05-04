@@ -16,8 +16,12 @@ import { useTaskStore } from '../store/useTaskStore';
 Dimensions.get('window');
 
 const HomeScreen = ({ navigation }: any) => {
-  const { tasks } = useTaskStore();
+  const { tasks, initDB } = useTaskStore();
   const categories = ['All Tasks', 'Urgent', 'Personal', 'Work', 'Ideas'];
+
+  React.useEffect(() => {
+    initDB();
+  }, [initDB]);
 
   return (
     <View style={styles.container}>
