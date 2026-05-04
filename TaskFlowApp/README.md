@@ -95,3 +95,109 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+# TaskFlow
+
+# 🚀 TaskFlow - Premium AI Productivity App
+
+TaskFlow is a high-performance, AI-driven task management application built with **React Native**. It features a stunning, premium user interface designed to showcase modern mobile development capabilities, including smooth animations, gradient aesthetics, and robust offline data persistence.
+
+---
+
+## ✨ Key Features
+
+- **🧠 AI Priority Scoring**: Automatically calculates task priority based on the content and urgency of your titles and descriptions.
+- **📊 Real-time Analytics**: Interactive dashboard with productivity scores and weekly performance charts.
+- **💾 Offline-First (SQLite)**: Full CRUD (Create, Read, Update, Delete) operations powered by a local SQLite database for reliable offline access.
+- **📱 Premium UI/UX**:
+  - **Glassmorphism-style** floating bottom navigation.
+  - **Dynamic Greetings** based on the time of day.
+  - **Micro-animations** for smooth screen transitions and interactions.
+  - **Linear Gradients** for a state-of-the-art visual experience.
+- **🌓 Adaptive Design**: Clean, modern interface with high-contrast elements for maximum readability.
+
+---
+
+## 🛠️ Technology Stack
+
+| Technology       | Purpose                                        |
+| :--------------- | :--------------------------------------------- |
+| **React Native** | Core Framework (Cross-platform)                |
+| **TypeScript**   | Type-safe development                          |
+| **Zustand**      | Lightweight, high-performance state management |
+| **SQLite**       | Robust local data persistence                  |
+| **Babel**        | JavaScript compiler for modern features        |
+
+---
+
+## 📦 Key Packages & Dependencies
+
+- **Navigation**:
+  - `@react-navigation/native` & `@react-navigation/bottom-tabs`
+  - `@react-navigation/stack`
+- **UI & Animations**:
+  - `react-native-reanimated`: Industry-standard animation library.
+  - `react-native-linear-gradient`: High-performance gradients.
+  - `react-native-vector-icons`: Premium icon sets.
+  - `react-native-gesture-handler`: Fluid touch interactions.
+- **Database**:
+  - `react-native-sqlite-storage`: Direct access to SQLite on Android/iOS.
+- **Performance**:
+  - `react-native-worklets`: Backend engine for Reanimated.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v22+)
+- Android Studio / Xcode
+- Java Development Kit (JDK) 17+
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/Dilshan189/TaskFlow.git
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+3. **Reset Cache & Run (Recommended)**:
+
+   ```bash
+   # Reset Metro cache
+   npx react-native start --reset-cache
+
+   # Run on Android
+   npm run android
+   ```
+
+---
+
+## 📂 Project Structure
+
+- `src/screens/`: App screens (Home, Tasks, Analytics, Profile, Welcome).
+- `src/navigation/`: Navigation configurations (Stack and Tab Navigators).
+- `src/store/`: Zustand state management and AI logic.
+- `src/services/`: Database (SQLite) services.
+- `src/utils/`: Theme tokens (Colors, Spacing, Sizes).
+
+---
+
+## 👤 Author
+
+**Dilshan Rathnayaka**
+
+- GitHub: [@Dilshan189](https://github.com/Dilshan189)
+- Local Git Profile: Dilshan567
+
+---
+
+_Built with ❤️ to showcase top-tier mobile development talent._
