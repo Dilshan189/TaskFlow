@@ -1,0 +1,9 @@
+{
+  "name": "TaskFlowApp",
+  "displayName": "TaskFlow - AI Productivity",
+  "version": "1.0.0",
+  "android": {
+    "package": "com.taskflowapp",
+    "versionCode": 1
+  }
+}
